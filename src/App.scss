@@ -1,0 +1,66 @@
+body {
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+
+  .spacing-component {
+    padding: 15px 10px;
+    height: auto;
+  }
+
+  #sideBar-item {
+    border-bottom: 1px solid #b4b4b4;
+  }
+  #sideBar .MuiPaper-root a:focus,
+  #sideBar .MuiPaper-root a:hover {
+    background-color: #7c7c7c;
+  }
+  #sideBar .MuiPaper-root a:active {
+    background-color: #aaaaaa;
+  }
+
+}
+
+body.dark-mode {
+  background-color: #181818;
+  color: white;
+
+  #barColor {
+    background-color: #0e0103;
+  }
+  #sideBar .MuiPaper-root {
+    background-color: #808080;
+    color: white;
+  }
+  #sideBar .MuiPaper-root a:focus,
+  #sideBar .MuiPaper-root a:hover {
+    background-color: #242424;
+  }
+  #sideBar .MuiPaper-root a:active {
+    background-color: #313131;
+  }
+  .MuiPaper-root {
+    color: rgba(255, 255, 255, 0.87);
+    background: #424242;
+    input {
+      color: white;
+    }
+  }
+  .MuiFormLabel-root {
+    color: rgba(255, 255, 255, 0.87)
+  }
+  .MuiInput-underline:after {
+    border-bottom: 2px solid #dadada
+  }
+  #sbtLogin, #cnlLogin, #sbtReg, #cnlReg, #sbtGoogle {
+    color: white;
+  }
+}
+.App {
+  text-align: center;
+}
+
+.profileImage {
+  background-size: cover !important;
+  height: 200px;
+  width: 200px;
+}
