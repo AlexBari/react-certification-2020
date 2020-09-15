@@ -57,7 +57,7 @@ const LoginDialog = (props) => {
                             onChange={handlePassword}
                         />
                         <div style={{ padding: '5px 0', textAlign: 'end' }}>
-                            <Button id="sbtGoogle" color="primary" onClick={auth.signInWithGoogle}>
+                            <Button id="sbtGoogle" color="primary" onClick={auth.signUpWithGoogle}>
                                 Login in with Google
                             </Button>
                             <Button id="sbtLogin" type="submit" color="primary">

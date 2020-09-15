@@ -1,23 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
+import { Typography, Grid, FormGroup, FormControlLabel } from '@material-ui/core'
+import { IconButton } from '@material-ui/core';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import '../video.scss';
 
-const VideoDetail = ({video}) => {
-    if (!video) {
-        return <div>Loading ...</div>;
+const VideoDetail = ({ selectedVideo, handlerFavoriteList, favorite }) => {
+    const [isFavorite, setFavorite] = useState(favorite || false);
+    const onFavoriteHandler = (e) => {
+        e.preventDefault();
+        const value = !isFavorite;
+        setFavorite(value);
+        handlerFavoriteList(selectedVideo, value);
     }
-
-    const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
-    console.log(typeof(video));
+    if (!selectedVideo) {
+        return "";
+    }
     return (
-        <div>
-            <div className='ui embed'>
-                <iframe src={videoSrc} allowFullScreen title='Video player'/>
-            </div>
-            <div className='ui segment'>
-                <h4 className='ui header'>{video.snippet.title}</h4>
-                <p>{video.snippet.description}</p>
-            </div>
-        </div>
+        <Grid
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="center"
+            wrap="nowrap"
+            className="video-detail"
+        >
+            <Grid item xs={12} className='player-centered'>
+                <ReactPlayer
+                    key={`https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`}
+                    url={`https://www.youtube.com/embed/${selectedVideo.id.videoId}`}
+                    title='WizeTube player'
+                    controls={true}
+                    playing={true}
+                    width="100%"
+                    height="100%"
+                />
+            </Grid>
+            <Grid item className='description'>
+                <Typography varian="h6">{selectedVideo.snippet.title}</Typography>
+                <FormGroup>
+                    <FormControlLabel
+                        control={
+                            <IconButton tooltip="Hide" style={{ float: 'right' }} iconStyle={{ marginTop: -25 }} onClick={onFavoriteHandler}>
+                                {isFavorite
+                                    ? <FavoriteIcon style={{color: 'red'}}/>
+                                    : <FavoriteBorderIcon />
+                                }
+                            </IconButton>
+                        }
+                    />
+                </FormGroup>
+            </Grid>
+        </Grid>
 
     )
 }

@@ -2,7 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemText, Drawer } from '@material-ui/core';
+import { List, ListItem, ListItemText, Drawer, ListItemIcon } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,9 +40,18 @@ const SideBar = ({ variant, open, onClose, onItemClick }) => {
                     [classes.toolbarMargin]: variant === 'persistent'
                 })}
             />
-            <List style={{paddingTop: '0'}}>
-                <ListItem id="sideBar-item" button component={Link} to="/" onClick={onItemClick('Home')}>
-                    <ListItemText>Home</ListItemText>
+            <List style={{ paddingTop: '0' }}>
+                <ListItem id="sideBar-item" button component={Link} to="/home" onClick={onItemClick('Home')}>
+                    <ListItemIcon>
+                        <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText> Home</ListItemText>
+                </ListItem>
+                <ListItem id="sideBar-item" button component={Link} to="/favorites" onClick={onItemClick('Home')}>
+                    <ListItemIcon>
+                        <FavoriteBorderIcon />
+                    </ListItemIcon>
+                    <ListItemText>My Favorites</ListItemText>
                 </ListItem>
             </List>
         </Drawer>

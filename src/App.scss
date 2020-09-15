@@ -10,14 +10,27 @@ body {
   #sideBar-item {
     border-bottom: 1px solid #b4b4b4;
   }
+
   #sideBar .MuiPaper-root a:focus,
   #sideBar .MuiPaper-root a:hover {
     background-color: #7c7c7c;
   }
+
   #sideBar .MuiPaper-root a:active {
     background-color: #aaaaaa;
   }
-
+  .brand1 {
+    color:black;
+    margin-left: 5px;
+    font-weight: bolder;
+    padding: 5px;
+  }
+  .brand2 {
+    background-color: rgb(224, 102, 102);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+  }
 }
 
 body.dark-mode {
@@ -27,34 +40,57 @@ body.dark-mode {
   #barColor {
     background-color: #0e0103;
   }
+
   #sideBar .MuiPaper-root {
     background-color: #808080;
     color: white;
   }
+
   #sideBar .MuiPaper-root a:focus,
   #sideBar .MuiPaper-root a:hover {
     background-color: #242424;
   }
+
   #sideBar .MuiPaper-root a:active {
     background-color: #313131;
   }
+
   .MuiPaper-root {
     color: rgba(255, 255, 255, 0.87);
     background: #424242;
+
     input {
       color: white;
     }
   }
+
   .MuiFormLabel-root {
     color: rgba(255, 255, 255, 0.87)
   }
+
   .MuiInput-underline:after {
     border-bottom: 2px solid #dadada
   }
-  #sbtLogin, #cnlLogin, #sbtReg, #cnlReg, #sbtGoogle {
+
+  #sbtLogin,
+  #cnlLogin,
+  #sbtReg,
+  #cnlReg,
+  #sbtGoogle {
     color: white;
   }
+
+  .searchBarDiv {
+    background-color: #0e0103;
+  }
+  .brand1 {
+    color:white;
+    margin-left: 5px;
+    font-weight: bolder;
+    padding: 5px;
+  }
 }
+
 .App {
   text-align: center;
 }

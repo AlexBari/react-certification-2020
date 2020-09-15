@@ -10,15 +10,6 @@ title {
     flex-grow: 1,
 }
 
-#searchDiv {
-    width: 200px;
-    transition: width 200ms;
-}
-
-#searchDiv:focus {
-    width: 300px;
-}
-
 li {
     a:link {
         color: inherit;

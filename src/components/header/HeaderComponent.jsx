@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Switch, IconButton, FormControlLabel, FormGroup } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchBar from '../searchBar/SearchBarComponent'
 import './HeaderComponent.scss';
 
 const styles = {
@@ -16,6 +15,7 @@ const styles = {
     },
     title: {
         flexGrow: 2,
+
     },
     appBar: {
         background: '#b6051a',
@@ -24,32 +24,7 @@ const styles = {
     },
     spacingMenuItem: {
         top: '45px'
-    },
-    searchIcon: {
-      padding: '1px 5px',
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    search: {
-      position: 'relative',
-      borderRadius: '5px',
-      backgroundColor: 'rgba(255, 255, 255, .15)',
-      '&:hover': {
-        backgroundColor: 'rgba(255, 255, 255, .25) ',
-      },
-      marginLeft: 0,
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: '8px 8px 8px 0px',
-      paddingLeft: `calc(1em + 32px)`,
-    },
+    }
 };
 
 class HeaderComponent extends Component {
@@ -57,7 +32,7 @@ class HeaderComponent extends Component {
         super(props);
         this.state = {
             anchorEl: null,
-            isDarkMode: false
+            isDarkMode: this.props.darkMode
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -88,8 +63,8 @@ class HeaderComponent extends Component {
     }
 
     render() {
-        const {  anchorEl, isDarkMode } = this.state;
-        const { isLoggedIn,classes, handleRegOpen, handleLogOpen, handleCloseSession, title } = this.props;
+        const { anchorEl, isDarkMode } = this.state;
+        const { isLoggedIn, classes, handleRegOpen, handleLogOpen, handleCloseSession } = this.props;
         const open = Boolean(anchorEl);
 
         return (
@@ -99,14 +74,11 @@ class HeaderComponent extends Component {
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu"
                             onClick={this.props.onMenuClick}>
                             <MenuIcon />
+                            <span className="brand1">Wize</span><span style={{fontSize: '20px'}} className="brand2">Tube</span>
                         </IconButton>
-                        { isLoggedIn && (
-                            <SearchBar classes={classes} />
-                        )}
                         <Typography variant="h6" className={classes.title}>
-                            {title}
                         </Typography>
-                        { isLoggedIn
+                        {isLoggedIn
                             ?
                             <div>
                                 <IconButton
@@ -134,13 +106,13 @@ class HeaderComponent extends Component {
                                     onClose={this.handleClose}
                                 >
                                     <MenuItem>
-                                     <Link to='/profile'>
-                                        My account
+                                        <Link to='/profile'>
+                                            My account
                                      </Link>
                                     </MenuItem>
                                     <MenuItem>
                                         Dark Mode
-                                        <FormGroup style={{marginLeft: '10px'}}>
+                                        <FormGroup style={{ marginLeft: '10px' }}>
                                             <FormControlLabel
                                                 control={
                                                     <Switch
@@ -157,8 +129,8 @@ class HeaderComponent extends Component {
                             </div>
                             :
                             <div>
-                             <Button id="loginBtn" color="inherit" onClick={handleLogOpen}>Login</Button>
-                             <Button id="registerBtn" color="inherit" onClick={handleRegOpen}>Register</Button>
+                                <Button id="loginBtn" color="inherit" onClick={handleLogOpen}>Login</Button>
+                                <Button id="registerBtn" color="inherit" onClick={handleRegOpen}>Register</Button>
                             </div>
                         }
                     </Toolbar>

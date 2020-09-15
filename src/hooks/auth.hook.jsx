@@ -30,58 +30,37 @@ export const useAuth = () => {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const loginSession = (email, password) => {
-    return firebase
+  const loginSession = async (email, password) => {
+    const response = await firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then( async (response) => {
-        setUser(await getUserDocument(response.user.uid));
-        return user;
-      });
+      .signInWithEmailAndPassword(email, password);
+      const usr = await getUserDocument(response.user.uid)
+      setUser(usr);
+      return usr;
   };
 
-  const registerUser = (email, password, displayName) => {
-    return firebase
+  const registerUser = async (email, password, displayName) => {
+    const response = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        generateUserDocument(response, { displayName });
-        setUser(response.user);
-        return response.user;
-      });
+      .createUserWithEmailAndPassword(email, password);
+    setUser(await generateUserDocument(response, { displayName, darkMode: response.user.darkMode || false, favoriteList: response.user.favoriteList || [] }));
+    return user;
   };
 
-  const logoutSession = () => {
-    return firebase
+  const logoutSession = async () => {
+    await firebase
       .auth()
-      .signOut()
-      .then(() => {
-        setUser(null);
-      });
+      .signOut();
+    setUser(null);
   };
 
-  const sendPasswordResetEmail = email => {
-    return firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        return true;
-      });
-  };
-
-  const confirmPasswordReset = (code, password) => {
-    return firebase
-      .auth()
-      .confirmPasswordReset(code, password)
-      .then(() => {
-        return true;
-      });
-  };
-
-  const signInWithGoogle = () => {
-    return firebase
-      .auth()
-      .signInWithPopup(provider);
+  const signUpWithGoogle = async () => {
+    const response = await firebase
+    .auth()
+    .signInWithPopup(provider);
+    const usr = await getUserDocument(response.user.uid)
+    setUser(usr);
+    return usr;
   };
 
   const generateUserDocument = async (obj, additionalData) => {
@@ -95,6 +74,8 @@ function useProvideAuth() {
           displayName: additionalData.displayName,
           email,
           photoURL,
+          darkMode: additionalData.darkMode,
+          favoriteList: additionalData.favoriteList,
           ...additionalData
         });
       } catch (error) {
@@ -117,6 +98,16 @@ function useProvideAuth() {
     }
   };
 
+  const updateUser = async (uid, additionalData) => {
+    firestore.doc(`users/${uid}`).update({
+      displayName: additionalData.displayName || user.displayName,
+      darkMode: additionalData.darkMode || user.darkMode || false,
+      favoriteList: additionalData.favoriteList || user.favoriteList || []
+    });
+    const usr = await getUserDocument(uid)
+    setUser(usr);
+  }
+
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -136,9 +127,8 @@ function useProvideAuth() {
     loginSession,
     registerUser,
     logoutSession,
-    sendPasswordResetEmail,
-    confirmPasswordReset,
     generateUserDocument,
-    signInWithGoogle
+    signUpWithGoogle,
+    updateUser
   };
 }

@@ -2,9 +2,57 @@
     display: flex !important;
     align-items: center !important;
     cursor: pointer;
+    padding: 10px;
+    max-height: 240px;
+    border-bottom: 1px solid rgba(252, 7, 7, 0.1);
 }
 
 .video-item.item img {
     max-width: 200px;
     max-height: 250px ;
+    border-radius: 5px;
+}
+
+.video-item.item .header {
+    margin: 0 10px;
+    text-align: left;
+    word-wrap: none;
+    max-height: 190px;
+    div {
+        padding: 5px;
+    } 
+}
+
+.player-centered {
+    text-align: -webkit-center;
+    height: 400px;
+    width: 700px;
+}
+
+.video.detail {
+    padding: 15px;
+    height: 500px;
+    max-height: 900px;
+}
+
+.description {
+    padding: 5 10px;
+    display: inline-flex;
+    h4 {
+        text-align: left;
+        padding: 10px 50px;
+    }
+    p {
+        text-align: justify;
+        text-justify: inter-word;
+        padding: 10px 50px;
+    }
+}
+#searchDiv {
+    width: 500px;
+    transition: width 200ms;
+}
+
+#searchDiv:focus {
+    width: 600px;
 }

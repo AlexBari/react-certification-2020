@@ -88,7 +88,7 @@ const RegisterDialog = (props) => {
                             required
                         />
                         <div style={{ padding: '5px 0', textAlign: 'end' }}>
-                            <Button id="sbtGoogle" color="primary" onClick={auth.signInWithGoogle}>
+                            <Button id="sbtGoogle" color="primary" onClick={auth.signUpWithGoogle}>
                                 Sign in with Google
                             </Button>
                             <Button id="sbtReg" type="submit" color="primary">
