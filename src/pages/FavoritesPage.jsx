@@ -4,6 +4,7 @@ import SearchBar from '../components/searchBar/SearchBarComponent';
 import VideoList from '../components/video/videoList/VideoListComponent';
 import VideoDetail from '../components/video/videoDetail/VideoDetailComponent';
 import { useAuth } from '../hooks/auth.hook';
+import { Typography } from '@material-ui/core';
 import './pages.scss';
 
 const FavoritesPage = (props) => {
@@ -37,7 +38,7 @@ const FavoritesPage = (props) => {
     return (
         <div style={{ marginTop: '1em' }}>
             <div className="searchBarDiv">
-                <SearchBar handleFormSubmit={handleSubmit} title={' in My Favorites'}/>
+                <SearchBar handleFormSubmit={handleSubmit} title={' in My Favorites'} />
             </div>
             <br />
             <Grid
@@ -56,11 +57,24 @@ const FavoritesPage = (props) => {
                             </Paper>
                         </Grid>
                     )}
-                <Grid item xs={12}>
-                    <Paper>
-                        <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
-                    </Paper>
-                </Grid>
+                {videos.length > 0
+                    ? (
+                        <Grid item xs={12}>
+                            <Paper>
+                                <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
+                            </Paper>
+                        </Grid>
+                    )
+                    : (
+                        <Grid item xs={12}>
+                            <Paper>
+                                <Typography variant="h6" style={{padding: '10px'}}>
+                                    There's no favorites yet...
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                    )
+                }
             </Grid>
         </div>
     );

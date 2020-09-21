@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper, Grid, Typography } from '@material-ui/core';
 import SearchBar from '../components/searchBar/SearchBarComponent';
 import VideoList from '../components/video/videoList/VideoListComponent';
 import VideoDetail from '../components/video/videoDetail/VideoDetailComponent';
@@ -76,7 +76,9 @@ const HomePage = (props) => {
           : (
             <Grid item xs={12}>
               <Paper>
-                There's no resutls for your search yet ...
+                <Typography variant="h6" style={{ padding: '10px' }}>
+                  There's no results for your search yet ...
+                </Typography>
               </Paper>
             </Grid>
           )
