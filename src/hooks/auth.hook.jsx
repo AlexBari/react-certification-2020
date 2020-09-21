@@ -99,19 +99,22 @@ function useProvideAuth() {
   };
 
   const updateUser = async (uid, additionalData) => {
-    firestore.doc(`users/${uid}`).update({
-      displayName: additionalData.displayName || user.displayName,
-      darkMode: additionalData.darkMode || user.darkMode || false,
-      favoriteList: additionalData.favoriteList || user.favoriteList || []
-    });
+    const upData = {
+      displayName: additionalData['displayName'] !== undefined? additionalData.displayName: user.displayName,
+      darkMode: additionalData['darkMode'] !== undefined? additionalData.darkMode: user.darkMode,
+      favoriteList: additionalData['favoriteList'] !== undefined? additionalData.favoriteList: user.favoriteList
+    }
+    firestore.doc(`users/${uid}`)
+    .update(upData);
     const usr = await getUserDocument(uid)
     setUser(usr);
   }
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       if (user) {
-        setUser(user);
+        const usr = await getUserDocument(user.uid);
+        setUser(usr);
       } else {
         setUser(null);
       }

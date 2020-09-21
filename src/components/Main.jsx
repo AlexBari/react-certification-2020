@@ -18,7 +18,8 @@ function Main({ variant }) {
     const [isRegOpened, setRegDialog] = useState(false);
     const [isLoggedIn, setLogin] = useState(false);
     const toggleDrawer = () => {
-        setDrawer(!drawer);
+        if(isLoggedIn)
+            setDrawer(!drawer);
     };
 
     const onItemClick = title => () => {
@@ -42,7 +43,7 @@ function Main({ variant }) {
     useEffect(() => {
         if (auth.user) {
             setLogin(true);
-            setDarkMode(auth.user.darkMode || false);
+            setDarkMode(auth.user.darkMode);
         } else {
             setLogin(false);
             setDarkMode(false);

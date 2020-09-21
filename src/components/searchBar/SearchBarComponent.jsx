@@ -35,7 +35,7 @@ const styles = {
     }
 };
 
-const SearchBar = ({ classes, handleFormSubmit }) => {
+const SearchBar = ({ classes, handleFormSubmit, title= '' }) => {
     const [term, setTerm] = useState('Default Text');
     const handleChange = (event) => {
         const value = event.target.value;
@@ -53,7 +53,7 @@ const SearchBar = ({ classes, handleFormSubmit }) => {
                 </div>
                 <InputBase
                     id="searchDiv"
-                    placeholder="Search…"
+                    placeholder={`Search${title}…`}
                     classes={{
                         root: classes.inputRoot,
                         input: classes.inputInput,

@@ -22,19 +22,22 @@ const FavoritesPage = (props) => {
     };
 
     const handlerFavoriteList = (video, favorite) => {
+        let arrVid = [];
         if (favorite) {
-            setFavoriteVideos([...videos, video]);
+            arrVid = [...videos, video];
         } else {
-            setFavoriteVideos(videos.filter((vd) => video.id.videoId !== vd.id.videoId));
+            arrVid = videos.filter((vd) => video.id.videoId !== vd.id.videoId);
         }
         auth.updateUser(auth.user.uid, {
-            favoriteList: videos
+            favoriteList: arrVid
         });
+        setFavoriteVideos(arrVid);
+        setFavorite(favorite);
     }
     return (
         <div style={{ marginTop: '1em' }}>
             <div className="searchBarDiv">
-                <SearchBar handleFormSubmit={handleSubmit} />
+                <SearchBar handleFormSubmit={handleSubmit} title={' in My Favorites'}/>
             </div>
             <br />
             <Grid

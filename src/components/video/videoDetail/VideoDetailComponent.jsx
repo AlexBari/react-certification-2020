@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactPlayer from 'react-player';
 import { Typography, Grid, FormGroup, FormControlLabel } from '@material-ui/core'
 import { IconButton } from '@material-ui/core';
@@ -6,12 +6,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import '../video.scss';
 
-const VideoDetail = ({ selectedVideo, handlerFavoriteList, favorite }) => {
-    const [isFavorite, setFavorite] = useState(favorite || false);
+const VideoDetail = ({ selectedVideo, handlerFavoriteList, isFavorite }) => {
     const onFavoriteHandler = (e) => {
         e.preventDefault();
         const value = !isFavorite;
-        setFavorite(value);
         handlerFavoriteList(selectedVideo, value);
     }
     if (!selectedVideo) {
@@ -42,9 +40,9 @@ const VideoDetail = ({ selectedVideo, handlerFavoriteList, favorite }) => {
                 <FormGroup>
                     <FormControlLabel
                         control={
-                            <IconButton tooltip="Hide" style={{ float: 'right' }} iconStyle={{ marginTop: -25 }} onClick={onFavoriteHandler}>
+                            <IconButton tooltip="Hide" style={{ float: 'right', color: isFavorite? 'red':'inherit' }} iconstyle={{ marginTop: -25}} onClick={onFavoriteHandler}>
                                 {isFavorite
-                                    ? <FavoriteIcon style={{color: 'red'}}/>
+                                    ? <FavoriteIcon />
                                     : <FavoriteBorderIcon />
                                 }
                             </IconButton>

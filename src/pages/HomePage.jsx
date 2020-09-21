@@ -34,10 +34,11 @@ const HomePage = (props) => {
     auth.updateUser(auth.user.uid, {
       favoriteList: videosArr
     });
+    setFavorite(favorite);
   }
 
   const handleVideoSelect = (video) => {
-    const flag = videos.filter(vd => vd.id.videoId === video.id.videoId).length > 0;
+    const flag = favVideos.filter(vd => vd.id.videoId === video.id.videoId).length > 0;
     setFavorite(flag);
     setVideo(video)
   };
@@ -64,11 +65,22 @@ const HomePage = (props) => {
               </Paper>
             </Grid>
           )}
-        <Grid item xs={12}>
-          <Paper>
-            <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
-          </Paper>
-        </Grid>
+        {videos.length > 0
+          ? (
+            <Grid item xs={12}>
+              <Paper>
+                <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
+              </Paper>
+            </Grid>
+          )
+          : (
+            <Grid item xs={12}>
+              <Paper>
+                There's no resutls for your search yet ...
+              </Paper>
+            </Grid>
+          )
+        }
       </Grid>
     </div>
   );

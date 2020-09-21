@@ -48,7 +48,7 @@ const RegisterDialog = (props) => {
         <div>
             <Dialog open={isOpened} onClose={handleRegClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Register</DialogTitle>
-                <DialogContent>
+                <DialogContent style={{ maxWidth: '380px' }}>
                     {hasError && (
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>
@@ -87,15 +87,23 @@ const RegisterDialog = (props) => {
                             value={password}
                             required
                         />
-                        <div style={{ padding: '5px 0', textAlign: 'end' }}>
-                            <Button id="sbtGoogle" color="primary" onClick={auth.signUpWithGoogle}>
-                                Sign in with Google
-                            </Button>
+                        <div style={{ padding: '5px 0', textAlign: 'center' }}>
                             <Button id="sbtReg" type="submit" color="primary">
                                 Sign in
                             </Button>
                             <Button id="cnlReg" type="Abort" color="primary" onClick={(e) => handleRegClose(e, displayName, password, email)}>
                                 Cancel
+                            </Button>
+                        </div>
+                        <div style={{ padding: '5px 0', textAlign: 'center' }}>
+                            <span>- or -</span>
+                        </div>
+                        <div style={{ padding: '5px 0', textAlign: 'center' }}>
+                            <Button id="sbtGoogle" color="primary" style={{ border: '1px solid lightgray', width: '300px' }} onClick={auth.signUpWithGoogle}>
+                                <span style={{ color: '#4285F4', marginRight: '3px' }}>Sign </span>
+                                <span style={{ color: '#DB4437', marginRight: '3px' }}>in </span>
+                                <span style={{ color: '#F4B400', marginRight: '3px' }}>with </span>
+                                <span style={{ color: '#0F9D58', }}>Google</span>
                             </Button>
                         </div>
                     </form>

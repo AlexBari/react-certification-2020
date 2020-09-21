@@ -32,11 +32,19 @@ class HeaderComponent extends Component {
         super(props);
         this.state = {
             anchorEl: null,
-            isDarkMode: this.props.darkMode
+            isDarkMode: this.props.darkMode || false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleMenu = this.handleMenu.bind(this);
+    }
+
+    componentDidUpdate() {
+        if (this.state.isDarkMode !== this.props.darkMode)
+            this.setState((prevState) => ({
+                ...prevState,
+                isDarkMode: this.props.darkMode
+            }));
     }
 
     handleChange(event) {
@@ -74,7 +82,7 @@ class HeaderComponent extends Component {
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu"
                             onClick={this.props.onMenuClick}>
                             <MenuIcon />
-                            <span className="brand1">Wize</span><span style={{fontSize: '20px'}} className="brand2">Tube</span>
+                            <span className="brand1">Wize</span><span style={{ fontSize: '20px' }} className="brand2">Tube</span>
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>
                         </Typography>
