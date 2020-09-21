@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchBar from '../components/searchBar/SearchBarComponent';
 import VideoList from '../components/video/videoList/VideoListComponent';
 import VideoDetail from '../components/video/videoDetail/VideoDetailComponent';
-import youtube from '../providers/video.provider';
+import { getVideos } from '../providers/video.provider';
 import { useAuth } from '../hooks/auth.hook';
 import './pages.scss';
 
-const HomePage = (props) => {
+const HomePage = () => {
   const auth = useAuth();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setVideo] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
   const [favVideos, setFavoriteVideos] = useState(auth.user.favoriteList || []);
+  const [token, setNextPageToken] = useState('');
+  const [searchPerformed, setSearchPerformed] = useState('');
 
   const handleSubmit = async (termForSearchBar) => {
-    const response = await youtube.get('/search', {
-      params: {
-        q: termForSearchBar,
-      },
-    });
+    const response = await getVideos(termForSearchBar);
+    setSearchPerformed(termForSearchBar);
+    setNextPageToken(response.data.nextPageToken);
     setVideos(response.data.items);
   };
 
@@ -41,6 +42,12 @@ const HomePage = (props) => {
     const flag = favVideos.filter((vd) => vd.id.videoId === video.id.videoId).length > 0;
     setFavorite(flag);
     setVideo(video);
+  };
+
+  const fetchMoreData = async () => {
+    const response = await getVideos(searchPerformed, token);
+    setNextPageToken(response.data.nextPageToken);
+    setVideos([...new Set([...videos, ...response.data.items])]);
   };
 
   return (
@@ -69,16 +76,23 @@ const HomePage = (props) => {
           </Grid>
         )}
         {videos.length > 0 ? (
-          <Grid item xs={12}>
-            <Paper>
-              <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
-            </Paper>
-          </Grid>
+          <InfiniteScroll
+            dataLength={videos.length}
+            next={fetchMoreData}
+            hasMore
+            loader={token === undefined && token !== '' ? <h4>Loading...</h4> : <br />}
+          >
+            <Grid item xs={12}>
+              <Paper>
+                <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
+              </Paper>
+            </Grid>
+          </InfiniteScroll>
         ) : (
           <Grid item xs={12}>
             <Paper>
               <Typography variant="h6" style={{ padding: '10px' }}>
-                There're no results for your search yet ...
+                There&lsquo;re no results for your search yet ...
               </Typography>
             </Paper>
           </Grid>
