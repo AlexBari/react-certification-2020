@@ -18,6 +18,7 @@ const HomePage = () => {
   const [searchPerformed, setSearchPerformed] = useState('');
 
   const handleSubmit = async (termForSearchBar) => {
+    setVideos([]);
     const response = await getVideos(termForSearchBar);
     setSearchPerformed(termForSearchBar);
     setNextPageToken(response.data.nextPageToken);
