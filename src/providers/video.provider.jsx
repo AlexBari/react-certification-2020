@@ -14,7 +14,7 @@ export function getVideos(searchPerfomed, nextPageToken = '') {
   return youtube.get('/search', {
     params: {
       q: searchPerfomed,
-      maxResults: 10,
+      maxResults: 50,
       pageToken: nextPageToken,
       type: 'Video',
     },

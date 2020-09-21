@@ -80,7 +80,13 @@ const HomePage = () => {
             dataLength={videos.length}
             next={fetchMoreData}
             hasMore
-            loader={token === undefined && token !== '' ? <h4>Loading...</h4> : <br />}
+            loader={
+              token !== undefined || token !== '' ? (
+                <h4>Loading...</h4>
+              ) : (
+                <h4>- End of the Search -</h4>
+              )
+            }
           >
             <Grid item xs={12}>
               <Paper>
