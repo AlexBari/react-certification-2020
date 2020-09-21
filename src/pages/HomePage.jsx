@@ -17,8 +17,8 @@ const HomePage = (props) => {
   const handleSubmit = async (termForSearchBar) => {
     const response = await youtube.get('/search', {
       params: {
-        q: termForSearchBar
-      }
+        q: termForSearchBar,
+      },
     });
     setVideos(response.data.items);
   };
@@ -32,15 +32,15 @@ const HomePage = (props) => {
     }
     setFavoriteVideos(videosArr);
     auth.updateUser(auth.user.uid, {
-      favoriteList: videosArr
+      favoriteList: videosArr,
     });
     setFavorite(favorite);
-  }
+  };
 
   const handleVideoSelect = (video) => {
-    const flag = favVideos.filter(vd => vd.id.videoId === video.id.videoId).length > 0;
+    const flag = favVideos.filter((vd) => vd.id.videoId === video.id.videoId).length > 0;
     setFavorite(flag);
-    setVideo(video)
+    setVideo(video);
   };
 
   return (
@@ -57,35 +57,35 @@ const HomePage = (props) => {
         spacing={2}
         wrap="nowrap"
       >
-        {videos.length > 0 &&
-          (
-            <Grid item xs={12}>
-              <Paper>
-                <VideoDetail isFavorite={isFavorite} handlerFavoriteList={handlerFavoriteList} selectedVideo={selectedVideo} />
-              </Paper>
-            </Grid>
-          )}
-        {videos.length > 0
-          ? (
-            <Grid item xs={12}>
-              <Paper>
-                <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
-              </Paper>
-            </Grid>
-          )
-          : (
-            <Grid item xs={12}>
-              <Paper>
-                <Typography variant="h6" style={{ padding: '10px' }}>
-                  There's no results for your search yet ...
-                </Typography>
-              </Paper>
-            </Grid>
-          )
-        }
+        {videos.length > 0 && (
+          <Grid item xs={12}>
+            <Paper>
+              <VideoDetail
+                isFavorite={isFavorite}
+                handlerFavoriteList={handlerFavoriteList}
+                selectedVideo={selectedVideo}
+              />
+            </Paper>
+          </Grid>
+        )}
+        {videos.length > 0 ? (
+          <Grid item xs={12}>
+            <Paper>
+              <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
+            </Paper>
+          </Grid>
+        ) : (
+          <Grid item xs={12}>
+            <Paper>
+              <Typography variant="h6" style={{ padding: '10px' }}>
+                There's no results for your search yet ...
+              </Typography>
+            </Paper>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
-}
+};
 
 export default HomePage;

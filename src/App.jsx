@@ -1,6 +1,6 @@
-import React from "react";
-import Main from "./components/Main";
-import {ProvideAuth} from "./hooks/auth.hook";
+import React from 'react';
+import Main from './components/Main';
+import { ProvideAuth } from './hooks/auth.hook';
 import './App.scss';
 
 function App() {

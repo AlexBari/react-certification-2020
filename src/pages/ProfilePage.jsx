@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid } from '@material-ui/core';
-import { useAuth } from '../hooks/auth.hook'
+import { useAuth } from '../hooks/auth.hook';
 import '../App.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,16 +12,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: '-webkit-center',
     color: theme.palette.text.secondary,
-    height: '200px'
+    height: '200px',
   },
 }));
 
 const ProfilePage = () => {
-  const auth = useAuth();;
+  const auth = useAuth();
   const classes = useStyles();
-  const { photoURL, displayName, email } = auth.user || { photoURL: '', displayName: '', email: '' };
+  const { photoURL, displayName, email } = auth.user || {
+    photoURL: '',
+    displayName: '',
+    email: '',
+  };
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <Grid
         container
         spacing={2}
@@ -33,10 +37,13 @@ const ProfilePage = () => {
           <Paper className={classes.paper}>
             <div
               style={{
-                background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+                background: `url(${
+                  photoURL ||
+                  'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'
+                })  no-repeat center center`,
               }}
               className="profileImage border border-blue-300"
-            ></div>
+            />
           </Paper>
         </Grid>
         <Grid item xs={3}>
@@ -47,6 +54,6 @@ const ProfilePage = () => {
         </Grid>
       </Grid>
     </div>
-  )
+  );
 };
 export default ProfilePage;
