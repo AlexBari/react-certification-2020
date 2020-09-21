@@ -78,7 +78,7 @@ const HomePage = (props) => {
           <Grid item xs={12}>
             <Paper>
               <Typography variant="h6" style={{ padding: '10px' }}>
-                There's no results for your search yet ...
+                There're no results for your search yet ...
               </Typography>
             </Paper>
           </Grid>

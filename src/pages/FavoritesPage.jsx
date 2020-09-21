@@ -71,7 +71,7 @@ const FavoritesPage = (props) => {
           <Grid item xs={12}>
             <Paper>
               <Typography variant="h6" style={{ padding: '10px' }}>
-                There's no favorites yet...
+                There're no favorites yet...
               </Typography>
             </Paper>
           </Grid>
