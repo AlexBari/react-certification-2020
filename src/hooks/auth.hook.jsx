@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -14,20 +14,10 @@ firebase.initializeApp({
   appId: '1:795946640964:web:1b73ad3f422a54ec70fe11',
 });
 
-const UserProvider = createContext();
 const provider = new firebase.auth.GoogleAuthProvider();
 const firestore = firebase.firestore();
 
-export function ProvideAuth({ children }) {
-  const auth = useProvideAuth();
-  return <UserProvider.Provider value={auth}>{children}</UserProvider.Provider>;
-}
-
-export const useAuth = () => {
-  return useContext(UserProvider);
-};
-
-function useProvideAuth() {
+export function useProvideAuth() {
   const [user, setUser] = useState(null);
 
   const loginSession = async (email, password) => {

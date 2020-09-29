@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid } from '@material-ui/core';
-import { useAuth } from '../hooks/auth.hook';
+import { useAuth } from '../providers/ProvideAuth';
 import '../App.scss';
 
 const useStyles = makeStyles((theme) => ({

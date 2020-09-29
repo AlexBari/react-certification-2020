@@ -6,7 +6,7 @@ import LoginDialog from './loginDialog/LoginDialog';
 import RegisterDialog from './registerDialog/RegisterDialog';
 import { ProfilePage, HomePage, FavoritesPage, LandingPage } from '../pages/index';
 import PrivateRoute from './PrivateRouter';
-import { useAuth } from '../hooks/auth.hook';
+import { useAuth } from '../providers/ProvideAuth';
 
 function Main({ variant }) {
   const auth = useAuth();

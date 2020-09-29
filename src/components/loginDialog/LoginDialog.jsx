@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { useAuth } from '../../hooks/auth.hook';
+import { useAuth } from '../../providers/ProvideAuth';
 
 const LoginDialog = (props) => {
   const [password, setPassword] = useState(null);
@@ -20,7 +20,6 @@ const LoginDialog = (props) => {
   const signInWithEmailAndPasswordHandler = (event, email, password) => {
     event.preventDefault();
     auth.loginSession(email, password).catch((error) => {
-      console.error('Error signing in with password and email', error);
       setError(true);
     }, handleLogin(email, password));
   };

@@ -40,31 +40,16 @@ class HeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null,
-      isDarkMode: this.props.darkMode || false,
+      anchorEl: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
   }
-
-  componentDidUpdate() {
-    if (this.state.isDarkMode !== this.props.darkMode)
-      this.setState((prevState) => ({
-        ...prevState,
-        isDarkMode: this.props.darkMode,
-      }));
-  }
-
+  
   handleChange(event) {
     const value = event.target.checked;
-    this.setState(
-      (prevState) => ({
-        ...prevState,
-        isDarkMode: value,
-      }),
-      this.props.changeColorMode(!this.state.isDarkMode)
-    );
+    this.props.changeColorMode(value)
   }
 
   handleMenu(event) {
@@ -83,8 +68,9 @@ class HeaderComponent extends Component {
   }
 
   render() {
-    const { anchorEl, isDarkMode } = this.state;
+    const { anchorEl } = this.state;
     const {
+      darkMode,
       isLoggedIn,
       classes,
       handleRegOpen,
@@ -146,7 +132,7 @@ class HeaderComponent extends Component {
                       <FormControlLabel
                         control={
                           <Switch
-                            checked={isDarkMode}
+                            checked={darkMode}
                             onChange={this.handleChange}
                             aria-label="Dark Mode"
                           />
@@ -160,15 +146,15 @@ class HeaderComponent extends Component {
                 </Button>
               </div>
             ) : (
-              <div>
-                <Button id="loginBtn" color="inherit" onClick={handleLogOpen}>
-                  Login
+                <div>
+                  <Button id="loginBtn" color="inherit" onClick={handleLogOpen}>
+                    Login
                 </Button>
-                <Button id="registerBtn" color="inherit" onClick={handleRegOpen}>
-                  Register
+                  <Button id="registerBtn" color="inherit" onClick={handleRegOpen}>
+                    Register
                 </Button>
-              </div>
-            )}
+                </div>
+              )}
           </Toolbar>
         </AppBar>
       </div>

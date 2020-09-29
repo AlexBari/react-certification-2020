@@ -5,7 +5,7 @@ import SearchBar from '../components/searchBar/SearchBarComponent';
 import VideoList from '../components/video/videoList/VideoListComponent';
 import VideoDetail from '../components/video/videoDetail/VideoDetailComponent';
 import { getVideos } from '../providers/video.provider';
-import { useAuth } from '../hooks/auth.hook';
+import { useAuth } from '../providers/ProvideAuth';
 import './pages.scss';
 
 const HomePage = () => {

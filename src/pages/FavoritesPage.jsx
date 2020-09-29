@@ -3,7 +3,7 @@ import { Paper, Grid, Typography } from '@material-ui/core';
 import SearchBar from '../components/searchBar/SearchBarComponent';
 import VideoList from '../components/video/videoList/VideoListComponent';
 import VideoDetail from '../components/video/videoDetail/VideoDetailComponent';
-import { useAuth } from '../hooks/auth.hook';
+import { useAuth } from '../providers/ProvideAuth';
 
 import './pages.scss';
 
