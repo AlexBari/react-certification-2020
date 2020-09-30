@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchBar from '../../components/searchBar/SearchBarComponent';
@@ -36,14 +36,16 @@ const HomeComponent = () => {
         });
     };
 
-    const handleFormSubmit = async (term) => {
-        const response = await getVideos(term);
-        saveHomeState({
-            searchPerformed: term,
-            token: response.data.nextPageToken,
-            videos: response.data.items
-        });
-    }
+    const handleFormSubmit = useCallback(async (term) => {
+        if (state.term === term) {
+            const response = await getVideos(term);
+            saveHomeState({
+                searchPerformed: term,
+                token: response.data.nextPageToken,
+                videos: response.data.items
+            });
+        }
+    }, [saveHomeState, state.term]);
 
     return (
         <MainWrapper>

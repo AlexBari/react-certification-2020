@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useAuth } from '../../providers/AuthProvider';
@@ -23,15 +23,15 @@ const LoginDialog = (props) => {
   const [hasError, setError] = useState(false);
   const auth = useAuth();
 
-  const handleUser = (e) => {
+  const handleUser = useCallback((e) => {
     const { value } = e.target;
     setEmail(value);
-  };
+  },[setEmail]);
 
-  const handlePassword = (e) => {
+  const handlePassword = useCallback((e) => {
     const { value } = e.target;
     setPassword(value);
-  };
+  },[setPassword]);
 
   const signInWithEmailAndPasswordHandler = (event) => {
     event.preventDefault();

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 export function useUI() {
     const [isLogOpened, setLoginDialog] = useState(false);
@@ -7,16 +7,12 @@ export function useUI() {
     const setLogState = useCallback(
         (flag) => {
             setLoginDialog(flag);
-        }, []);
+        }, [setLoginDialog]);
 
     const setRegState = useCallback(
         (flag) => {
             setRegDialog(flag);
-        }, []);
-
-    useEffect(() => {
-        console.log('inside the hook: ', isLogOpened)
-    }, [isLogOpened]);
+        }, [setRegDialog]);
 
     return {
         isLogOpened,

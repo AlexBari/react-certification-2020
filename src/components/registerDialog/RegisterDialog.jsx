@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useAuth } from '../../providers/AuthProvider';
@@ -25,24 +25,26 @@ const RegisterDialog = (props) => {
   const [msgError, setMsgError] = useState('');
 
   const auth = useAuth();
-  const handleUser = (e) => {
+  const handleUser = useCallback((e) => {
     const { value } = e.target;
     setDisplayName(value);
-  };
-  const handlePassword = (e) => {
+  }, [setDisplayName]);
+
+  const handlePassword = useCallback((e) => {
     const { value } = e.target;
     setPassword(value);
-  };
-  const handleEmail = (e) => {
+  }, [setPassword]);
+
+  const handleEmail = useCallback((e) => {
     const { value } = e.target;
     setEmail(value);
-  };
+  },[setEmail]);
 
   const createUserWithEmailAndPasswordHandler = async (event) => {
     event.preventDefault();
     await auth
       .registerUser(email, password, displayName)
-      .then(() =>props.handleClose())
+      .then(() => props.handleClose())
       .catch((error) => {
         setMsgError(error.message);
         resetFields();
