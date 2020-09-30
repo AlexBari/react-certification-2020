@@ -7,13 +7,48 @@ import RegisterDialog from './registerDialog/RegisterDialog';
 import { HomePage, FavoritesPage } from '../pages/index';
 import PrivateRoute from './PrivateRouter';
 import { useAuth } from '../providers/AuthProvider';
+import { useUI } from '../hooks/ui.hook';
+import styled from 'styled-components';
+
+const AppWrapper = styled.div`
+  text-align: center;
+  transition: background-color 0.3s ease;
+  .spacing-component {
+    padding: 15px 10px;
+    height: auto;
+    overflow: auto;
+  }
+  #sideBar--item {
+    border-bottom: 1px solid #b4b4b4;
+  }
+  #sideBar .MuiPaper-root a:focus,
+  #sideBar .MuiPaper-root a:hover {
+    background-color: #7c7c7c;
+  }
+  #sideBar .MuiPaper-root a:active {
+    background-color: #aaaaaa;
+  }
+  .brand1 {
+    color: black;
+    margin-left: 5px;
+    font-weight: bolder;
+    padding: 5px;
+  }
+  .brand2 {
+    background-color: rgb(224, 102, 102);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-size: 20px;
+  }
+`;
 
 function Main({ variant }) {
   const auth = useAuth();
+  const { isLogOpened, isRegOpened, setLogState, setRegState } = useUI();
   const [drawer, setDrawer] = useState(false);
-  const [isLogOpened, setLoginDialog] = useState(false);
-  const [isRegOpened, setRegDialog] = useState(false);
   const [isLoggedIn, setLogin] = useState(false);
+
   const toggleDrawer = () => {
     if (isLoggedIn) setDrawer(!drawer);
   };
@@ -23,60 +58,31 @@ function Main({ variant }) {
     setDrawer(!drawer);
   };
 
+  const handleLogout = () => {
+    auth.logoutSession();
+    setLogin(false);
+  };
+
+
   useEffect(() => {
     if (auth.user) {
       setLogin(true);
     } else {
       setLogin(false);
     }
-    setLoginDialog(false);
-    setRegDialog(false);
-  }, [auth.user]);
-
-  const handleLogOpen = () => {
-    setLoginDialog(true);
-  };
-
-  const handleRegOpen = () => {
-    setRegDialog(true);
-  };
-
-  const handleLogClose = (e) => {
-    e.preventDefault();
-    setLoginDialog(false);
-  };
-
-  const handleRegClose = (e) => {
-    e.preventDefault();
-    setRegDialog(false);
-  };
-
-  const handleLogin = (e, usr, password) => {
-    if (usr && password) {
-      setLoginDialog(false);
-    }
-  };
-
-  const handleRegister = (e, user, password, email) => {
-    if (user && password && email) {
-      setRegDialog(false);
-    }
-  };
-
-  const handleLogout = () => {
-    auth.logoutSession();
-    setLogin(false);
-  };
+    setLogState(false);
+    setRegState(false);
+  }, [auth.user, setLogState, setRegState]);
 
   return (
-    <div className="App">
+    <AppWrapper>
       <BrowserRouter>
         <HeaderComponent
           onMenuClick={toggleDrawer}
           isLoggedIn={isLoggedIn}
-          handleRegOpen={handleRegOpen}
-          handleLogOpen={handleLogOpen}
           handleCloseSession={handleLogout}
+          handleLogOpen={(e) => setLogState(true)}
+          handleRegOpen={(e) => setRegState(true)}
         />
         <SideBar
           open={drawer}
@@ -84,16 +90,8 @@ function Main({ variant }) {
           onItemClick={onItemClick}
           variant={variant}
         />
-        <LoginDialog
-          isOpened={isLogOpened}
-          handleLogClose={handleLogClose}
-          handleLogin={handleLogin}
-        />
-        <RegisterDialog
-          isOpened={isRegOpened}
-          handleRegClose={handleRegClose}
-          handleRegister={handleRegister}
-        />
+        <LoginDialog isOpened={isLogOpened} handleClose={(e) =>  setLogState(false)} />
+        <RegisterDialog isOpened={isRegOpened} handleClose={(e) =>  setRegState(false)} />
         <div className="spacing-component">
           <Switch>
             <PrivateRoute
@@ -105,7 +103,7 @@ function Main({ variant }) {
           </Switch>
         </div>
       </BrowserRouter>
-    </div>
+    </AppWrapper>
   );
 }
 

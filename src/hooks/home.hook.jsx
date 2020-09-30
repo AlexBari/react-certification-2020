@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export function useHomeProvider() {
     const [state, setHomeState] = useState({
@@ -9,10 +9,10 @@ export function useHomeProvider() {
         token: '',
         searchPerformed: ''
     });
-
-    const saveHomeState = (updates) => {
+    
+    const saveHomeState = useCallback((updates) => {
         setHomeState((prevState) => ({...prevState, ...updates}));
-    }
+    },[]);
 
     return {
         state,

@@ -1,62 +1,54 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
-  IconButton,
+  IconButton
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
-import './HeaderComponent.scss';
+import styled from 'styled-components';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: '5px',
-  },
-  title: {
-    flexGrow: 2,
-  },
-  appBar: {
-    background: '#b6051a',
-    height: '60px',
-  },
-  spacingMenuItem: {
-    top: '45px',
-  },
-};
+const DivWrapper = styled.div`
+  flex-grow: 1;
+  .MuiAppBar-colorPrimary {
+    background: #b6051a !important;
+    height: 60px;
+  }
+  .btn--menu {
+    margin-right: '5px';
+  }
+  .wrapper__btns {
+  margin-left: 40%;
+  }
+  .wrapper__logo{
+    margin-right: 41%;
+  }
+`;
 
 const HeaderComponent = (props) => {
-    const {
-      isLoggedIn,
-      classes,
-      handleRegOpen,
-      handleLogOpen,
-      handleCloseSession,
-    } = props;
-
-    return (
-      <div className={classes.root}>
-        <AppBar id="barColor" className={classes.appBar} position="static">
-          <Toolbar>
+  const { isLoggedIn, handleCloseSession } = props;
+  
+  return (
+    <DivWrapper>
+      <AppBar id="barColor" position="static">
+        <Toolbar>
+          <div className="wrapper__logo">
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className="btn--menu"
               color="inherit"
               aria-label="Menu"
               onClick={props.onMenuClick}
             >
               <MenuIcon />
               <span className="brand1">Wize</span>
-              <span style={{ fontSize: '20px' }} className="brand2">
+              <span className="brand2">
                 Tube
               </span>
             </IconButton>
-            <Typography variant="h6" className={classes.title} />
+          </div>
+          <div className="wrapper__btns">
             {isLoggedIn ? (
               <div>
                 <IconButton
@@ -73,18 +65,19 @@ const HeaderComponent = (props) => {
               </div>
             ) : (
                 <div>
-                  <Button id="loginBtn" color="inherit" onClick={handleLogOpen}>
+                  <Button id="loginBtn" color="inherit" onClick={props.handleLogOpen}>
                     Login
                 </Button>
-                  <Button id="registerBtn" color="inherit" onClick={handleRegOpen}>
+                  <Button id="registerBtn" color="inherit" onClick={props.handleRegOpen}>
                     Register
                 </Button>
                 </div>
               )}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+          </div>
+        </Toolbar>
+      </AppBar>
+    </DivWrapper>
+  );
 }
 
-export default withStyles(styles)(HeaderComponent);
+export default HeaderComponent;

@@ -2,34 +2,53 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useAuth } from '../../providers/AuthProvider';
+import styled from 'styled-components';
+
+const DivWrapper = styled.div`
+  padding: 5px 0;
+  text-align: center;
+  #sbtGoogle {
+    border: 1px solid lightgray;
+    width: 300px;
+  }
+  .blueG { color: #4285F4; margin-right: 3px;}
+  .redG { color: #DB4437; margin-right: 3px;}
+  .yellowG { color: #F4B400; margin-right: 3px;}
+  .greenG { color: #0F9D58; margin-right: 3px;}
+`;
 
 const LoginDialog = (props) => {
   const [password, setPassword] = useState(null);
   const [email, setEmail] = useState(null);
   const [hasError, setError] = useState(false);
   const auth = useAuth();
+
   const handleUser = (e) => {
     const { value } = e.target;
     setEmail(value);
   };
+
   const handlePassword = (e) => {
     const { value } = e.target;
     setPassword(value);
   };
 
-  const signInWithEmailAndPasswordHandler = (event, email, password) => {
+  const signInWithEmailAndPasswordHandler = (event) => {
     event.preventDefault();
-    auth.loginSession(email, password).catch((error) => {
-      setError(true);
-    }, handleLogin(email, password));
+    auth.loginSession(email, password)
+      .then(() => {
+        props.handleClose();
+      })
+      .catch((error) => {
+        setError(true);
+      });
   };
-
-  const { isOpened, handleLogClose, handleLogin } = props;
+  
   return (
     <div>
       <Dialog
-        open={isOpened}
-        onClose={handleLogClose}
+        open={props.isOpened}
+        onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
@@ -40,7 +59,7 @@ const LoginDialog = (props) => {
               <span>Please verify your credentials!</span>
             </Alert>
           )}
-          <form onSubmit={(e) => signInWithEmailAndPasswordHandler(e, email, password)}>
+          <form onSubmit={(e) => signInWithEmailAndPasswordHandler(e)}>
             <TextField
               autoFocus
               margin="dense"
@@ -58,30 +77,29 @@ const LoginDialog = (props) => {
               fullWidth
               onChange={handlePassword}
             />
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            <DivWrapper>
               <Button id="sbtLogin" type="submit" color="primary">
                 Login
               </Button>
-              <Button id="cnlLogin" type="Abort" color="primary" onClick={handleLogClose}>
+              <Button id="cnlLogin" type="Abort" color="primary" onClick={props.handleClose}>
                 Cancel
               </Button>
-            </div>
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            </DivWrapper>
+            <DivWrapper>
               <span>- or -</span>
-            </div>
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            </DivWrapper>
+            <DivWrapper>
               <Button
                 id="sbtGoogle"
                 color="primary"
-                style={{ border: '1px solid lightgray', width: '300px' }}
                 onClick={auth.signUpWithGoogle}
               >
-                <span style={{ color: '#4285F4', marginRight: '3px' }}>Sign </span>
-                <span style={{ color: '#DB4437', marginRight: '3px' }}>in </span>
-                <span style={{ color: '#F4B400', marginRight: '3px' }}>with </span>
-                <span style={{ color: '#0F9D58' }}>Google</span>
+                <span className="blueG">Sign </span>
+                <span className="redG">in </span>
+                <span className="yellowG">with </span>
+                <span className="greenG">Google</span>
               </Button>
-            </div>
+            </DivWrapper>
           </form>
         </DialogContent>
       </Dialog>

@@ -3,7 +3,14 @@ import { Paper, Grid, Typography } from '@material-ui/core';
 import VideoList from '../../components/video/videoList/VideoListComponent';
 import VideoDetail from '../../components/video/videoDetail/VideoDetailComponent';
 import { useAuth } from '../../providers/AuthProvider';
-import '../../pages/pages.scss';
+import styled from 'styled-components';
+
+const MainWrapper = styled.div`
+    margin-top: 1em;
+    .MuiTypography-h6 {
+        padding: 10px;
+    }
+`;
 
 const FavoritesComponent = () => {
   const auth = useAuth();
@@ -14,7 +21,7 @@ const FavoritesComponent = () => {
   }, [auth]);
 
   return (
-    <div style={{ marginTop: '1em' }}>
+    <MainWrapper>
       <br />
       <Grid
         container
@@ -40,14 +47,14 @@ const FavoritesComponent = () => {
         ) : (
             <Grid item xs={12}>
               <Paper>
-                <Typography variant="h6" style={{ padding: '10px' }}>
+              <Typography variant="h6">
                   There&lsquo;re no favorites yet...
               </Typography>
               </Paper>
             </Grid>
           )}
       </Grid>
-    </div>
+    </MainWrapper>
   );
 };
 

@@ -1,16 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SearchBar from '../../components/searchBar/SearchBarComponent';
 import VideoList from '../../components/video/videoList/VideoListComponent';
 import VideoDetail from '../../components/video/videoDetail/VideoDetailComponent';
-import { getVideos } from '../../providers/video.service';
+import { getVideos } from '../../components/video/video.service';
 import { useVideoContext } from '../../providers/VideoPageProvider';
-import '../../pages/pages.scss';
+import styled from 'styled-components';
+
+const MainWrapper = styled.div`
+    margin-top: 1em;
+    .MuiTypography-h6 {
+        padding: 10px;
+    }
+`;
+
+const SearchBarWrapper = styled.div`
+    display: inline-flex;
+    background-color: #b6051a;
+    padding: 5px 0;
+    color: white;
+    width: 100%;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 30px;
+`;
 
 const HomeComponent = () => {
     const { state, saveHomeState } = useVideoContext();
-    const [hasVideos, setHasVideos] = useState(false);
     const fetchMoreData = async () => {
         const response = await getVideos(state.searchPerformed, state.token);
         saveHomeState({
@@ -18,10 +35,6 @@ const HomeComponent = () => {
             videos: [...new Set([...state.videos, ...response.data.items])]
         });
     };
-
-    useEffect(() => {
-        setHasVideos(state.videos.length > 0 ? true : false);
-    }, [state, hasVideos]);
 
     const handleFormSubmit = async (term) => {
         const response = await getVideos(term);
@@ -33,10 +46,10 @@ const HomeComponent = () => {
     }
 
     return (
-        <div style={{ marginTop: '1em' }}>
-            <div className="searchBarDiv">
+        <MainWrapper>
+            <SearchBarWrapper>
                 <SearchBar handleFormSubmit={handleFormSubmit} />
-            </div>
+            </SearchBarWrapper>
             <br />
             <Grid
                 container
@@ -46,14 +59,14 @@ const HomeComponent = () => {
                 spacing={2}
                 wrap="nowrap"
             >
-                {hasVideos && (
+                {state.videos.length > 0 && (
                     <Grid item xs={12}>
                         <Paper>
                             <VideoDetail />
                         </Paper>
                     </Grid>
                 )}
-                {hasVideos ? (
+                {state.videos.length > 0 ? (
                     <InfiniteScroll
                         dataLength={state.videos.length}
                         next={fetchMoreData}
@@ -75,14 +88,14 @@ const HomeComponent = () => {
                 ) : (
                         <Grid item xs={12}>
                             <Paper>
-                                <Typography variant="h6" style={{ padding: '10px' }}>
+                                <Typography variant="h6">
                                     There&lsquo;re no results for your search yet ...
               </Typography>
                             </Paper>
                         </Grid>
                     )}
             </Grid>
-        </div>
+        </MainWrapper>
     );
 };
 

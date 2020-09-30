@@ -2,6 +2,20 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useAuth } from '../../providers/AuthProvider';
+import styled from 'styled-components';
+
+const DivWrapper = styled.div`
+  padding: 5px 0;
+  text-align: center;
+  #sbtGoogle {
+    border: 1px solid lightgray;
+    width: 300px;
+  }
+  .blueG { color: #4285F4; margin-right: 3px;}
+  .redG { color: #DB4437; margin-right: 3px;}
+  .yellowG { color: #F4B400; margin-right: 3px;}
+  .greenG { color: #0F9D58; margin-right: 3px;}
+`;
 
 const RegisterDialog = (props) => {
   const [password, setPassword] = useState('');
@@ -9,7 +23,7 @@ const RegisterDialog = (props) => {
   const [email, setEmail] = useState('');
   const [hasError, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { isOpened, handleRegClose, handleRegister } = props;
+
   const auth = useAuth();
   const handleUser = (e) => {
     const { value } = e.target;
@@ -28,9 +42,7 @@ const RegisterDialog = (props) => {
     event.preventDefault();
     await auth
       .registerUser(email, password, displayName)
-      .then(({ displayName, email, password }) => {
-        handleRegister(displayName, email, password);
-      })
+      .then(() =>props.handleClose())
       .catch((error) => {
         setMsgError(error.message);
         resetFields();
@@ -48,8 +60,8 @@ const RegisterDialog = (props) => {
   return (
     <div>
       <Dialog
-        open={isOpened}
-        onClose={handleRegClose}
+        open={props.isOpened}
+        onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Register</DialogTitle>
@@ -92,7 +104,7 @@ const RegisterDialog = (props) => {
               value={password}
               required
             />
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            <DivWrapper>
               <Button id="sbtReg" type="submit" color="primary">
                 Sign in
               </Button>
@@ -100,27 +112,26 @@ const RegisterDialog = (props) => {
                 id="cnlReg"
                 type="Abort"
                 color="primary"
-                onClick={(e) => handleRegClose(e, displayName, password, email)}
+                onClick={props.handleClose}
               >
                 Cancel
               </Button>
-            </div>
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            </DivWrapper>
+            <DivWrapper>
               <span>- or -</span>
-            </div>
-            <div style={{ padding: '5px 0', textAlign: 'center' }}>
+            </DivWrapper>
+            <DivWrapper>
               <Button
                 id="sbtGoogle"
                 color="primary"
-                style={{ border: '1px solid lightgray', width: '300px' }}
                 onClick={auth.signUpWithGoogle}
               >
-                <span style={{ color: '#4285F4', marginRight: '3px' }}>Sign </span>
-                <span style={{ color: '#DB4437', marginRight: '3px' }}>in </span>
-                <span style={{ color: '#F4B400', marginRight: '3px' }}>with </span>
-                <span style={{ color: '#0F9D58' }}>Google</span>
+                <span className="blueG">Sign </span>
+                <span className="redG">in </span>
+                <span className="yellowG">with </span>
+                <span className="greenG">Google</span>
               </Button>
-            </div>
+            </DivWrapper>
           </form>
         </DialogContent>
       </Dialog>

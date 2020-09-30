@@ -1,31 +1,11 @@
 import React, { useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { withStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import '../video/video.scss';
+import { withStyles } from '@material-ui/core';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  searchIcon: {
-    padding: '1px 5px',
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  search: {
-    position: 'relative',
-    borderRadius: '5px',
-    backgroundColor: 'rgba(255, 255, 255, .15)',
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, .25) ',
-    },
-    marginLeft: 0,
-  },
   inputRoot: {
     color: 'inherit',
   },
@@ -34,6 +14,25 @@ const styles = {
     paddingLeft: `calc(1em + 32px)`,
   },
 };
+
+const DivWrapper = styled.div`
+  position: relative;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, .15);
+  margin-left: 0;
+  &:hover {
+    background-color: rgba(255, 255, 255, .50),
+  }
+  .searchIcon {
+    padding: 1px 5px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 
 const SearchBar = ({ classes, handleFormSubmit, title = '' }) => {
   const [term, setTerm] = useState('Default Text');
@@ -48,9 +47,9 @@ const SearchBar = ({ classes, handleFormSubmit, title = '' }) => {
   };
 
   return (
-    <div className={classes.search}>
+    <DivWrapper>
       <form onSubmit={handleSubmit}>
-        <div className={classes.searchIcon}>
+        <div className="searchIcon">
           <SearchIcon />
         </div>
         <InputBase
@@ -65,7 +64,7 @@ const SearchBar = ({ classes, handleFormSubmit, title = '' }) => {
           autoComplete="off"
         />
       </form>
-    </div>
+    </DivWrapper>
   );
 };
 
