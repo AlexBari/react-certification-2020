@@ -34,64 +34,6 @@ body {
   }
 }
 
-body.dark-mode {
-  background-color: #181818;
-  color: white;
-
-  #barColor {
-    background-color: #0e0103;
-  }
-
-  #sideBar .MuiPaper-root {
-    background-color: #808080;
-    color: white;
-  }
-
-  #sideBar .MuiPaper-root a:focus,
-  #sideBar .MuiPaper-root a:hover {
-    background-color: #242424;
-  }
-
-  #sideBar .MuiPaper-root a:active {
-    background-color: #313131;
-  }
-
-  .MuiPaper-root {
-    color: rgba(255, 255, 255, 0.87);
-    background: #424242;
-
-    input {
-      color: white;
-    }
-  }
-
-  .MuiFormLabel-root {
-    color: rgba(255, 255, 255, 0.87)
-  }
-
-  .MuiInput-underline:after {
-    border-bottom: 2px solid #dadada
-  }
-
-  #sbtLogin,
-  #cnlLogin,
-  #sbtReg,
-  #cnlReg,
-  #sbtGoogle {
-    color: white;
-  }
-
-  .searchBarDiv {
-    background-color: #0e0103;
-  }
-  .brand1 {
-    color:white;
-    margin-left: 5px;
-    font-weight: bolder;
-    padding: 5px;
-  }
-}
-
 .App {
   text-align: center;
 }

@@ -7,18 +7,38 @@ import {
   FormControlLabel,
   IconButton,
 } from '@material-ui/core';
-
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import '../video.scss';
+import { useVideoContext } from '../../../providers/VideoPageProvider';
+import { useAuth } from '../../../providers/AuthProvider';
 
-const VideoDetail = ({ selectedVideo, handlerFavoriteList, isFavorite }) => {
+const VideoDetail = () => {
+  const { state, saveHomeState } = useVideoContext();
+  const auth = useAuth();
+
   const onFavoriteHandler = (e) => {
     e.preventDefault();
-    const value = !isFavorite;
-    handlerFavoriteList(selectedVideo, value);
+    const value = !state.isFavorite;
+    const video = state.selectedVideo;
+    let videosArr = [];
+    if (value) {
+      videosArr = [...state.favoriteList, video];
+    } else {
+      videosArr = state.favoriteList.filter((vd) => video.id.videoId !== vd.id.videoId);
+    }
+    if (auth.user) {
+      auth.updateUser(auth.user.uid, {
+        favoriteList: videosArr,
+      });
+    }
+    saveHomeState({
+      favoriteList: videosArr,
+      isFavorite: value,
+    });
   };
-  if (!selectedVideo) {
+
+  if (!state.selectedVideo) {
     return '';
   }
   return (
@@ -32,8 +52,8 @@ const VideoDetail = ({ selectedVideo, handlerFavoriteList, isFavorite }) => {
     >
       <Grid item xs={12} className="player-centered">
         <ReactPlayer
-          key={`https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`}
-          url={`https://www.youtube.com/embed/${selectedVideo.id.videoId}`}
+          key={`https://www.youtube.com/watch?v=${state.selectedVideo.id.videoId}`}
+          url={`https://www.youtube.com/embed/${state.selectedVideo.id.videoId}`}
           title="WizeTube player"
           controls
           playing
@@ -42,21 +62,23 @@ const VideoDetail = ({ selectedVideo, handlerFavoriteList, isFavorite }) => {
         />
       </Grid>
       <Grid item className="description">
-        <Typography varian="h6">{selectedVideo.snippet.title}</Typography>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <IconButton
-                tooltip="Hide"
-                style={{ float: 'right', color: isFavorite ? 'red' : 'inherit' }}
-                iconstyle={{ marginTop: -25 }}
-                onClick={onFavoriteHandler}
-              >
-                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-            }
-          />
-        </FormGroup>
+        <Typography varian="h6">{state.selectedVideo.snippet.title}</Typography>
+        {auth.user && (
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <IconButton
+                  tooltip="Hide"
+                  style={{ float: 'right', color: state.isFavorite ? 'red' : 'inherit' }}
+                  iconstyle={{ marginTop: -25 }}
+                  onClick={onFavoriteHandler}
+                >
+                  {state.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+              }
+            />
+          </FormGroup>
+        )}
       </Grid>
     </Grid>
   );

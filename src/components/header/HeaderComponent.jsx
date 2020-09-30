@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
-  Menu,
-  MenuItem,
-  Switch,
   IconButton,
-  FormControlLabel,
-  FormGroup,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -36,48 +30,14 @@ const styles = {
   },
 };
 
-class HeaderComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      anchorEl: null
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleMenu = this.handleMenu.bind(this);
-  }
-  
-  handleChange(event) {
-    const value = event.target.checked;
-    this.props.changeColorMode(value)
-  }
-
-  handleMenu(event) {
-    const value = event.currentTarget;
-    this.setState((prevState) => ({
-      ...prevState,
-      anchorEl: value,
-    }));
-  }
-
-  handleClose() {
-    this.setState((prevState) => ({
-      ...prevState,
-      anchorEl: null,
-    }));
-  }
-
-  render() {
-    const { anchorEl } = this.state;
+const HeaderComponent = (props) => {
     const {
-      darkMode,
       isLoggedIn,
       classes,
       handleRegOpen,
       handleLogOpen,
       handleCloseSession,
-    } = this.props;
-    const open = Boolean(anchorEl);
+    } = props;
 
     return (
       <div className={classes.root}>
@@ -88,7 +48,7 @@ class HeaderComponent extends Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
-              onClick={this.props.onMenuClick}
+              onClick={props.onMenuClick}
             >
               <MenuIcon />
               <span className="brand1">Wize</span>
@@ -103,44 +63,10 @@ class HeaderComponent extends Component {
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  onClick={this.handleMenu}
                   color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem>
-                    <Link to="/profile">My account</Link>
-                  </MenuItem>
-                  <MenuItem>
-                    Dark Mode
-                    <FormGroup style={{ marginLeft: '10px' }}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={darkMode}
-                            onChange={this.handleChange}
-                            aria-label="Dark Mode"
-                          />
-                        }
-                      />
-                    </FormGroup>
-                  </MenuItem>
-                </Menu>
                 <Button id="logoutBtn" color="inherit" onClick={handleCloseSession}>
                   Logout
                 </Button>
@@ -159,7 +85,6 @@ class HeaderComponent extends Component {
         </AppBar>
       </div>
     );
-  }
 }
 
 export default withStyles(styles)(HeaderComponent);

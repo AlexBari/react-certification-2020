@@ -4,14 +4,13 @@ import HeaderComponent from './header/HeaderComponent';
 import SideBar from './sideBar/SideBarComponent';
 import LoginDialog from './loginDialog/LoginDialog';
 import RegisterDialog from './registerDialog/RegisterDialog';
-import { ProfilePage, HomePage, FavoritesPage, LandingPage } from '../pages/index';
+import { HomePage, FavoritesPage } from '../pages/index';
 import PrivateRoute from './PrivateRouter';
-import { useAuth } from '../providers/ProvideAuth';
+import { useAuth } from '../providers/AuthProvider';
 
 function Main({ variant }) {
   const auth = useAuth();
   const [drawer, setDrawer] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [isLogOpened, setLoginDialog] = useState(false);
   const [isRegOpened, setRegDialog] = useState(false);
   const [isLoggedIn, setLogin] = useState(false);
@@ -24,28 +23,15 @@ function Main({ variant }) {
     setDrawer(!drawer);
   };
 
-  // Effect call for dark mode theme change
-  useEffect(() => {
-    const className = 'dark-mode';
-    const element = window.document.body;
-    if (darkMode) {
-      element.classList.add(className);
-    } else {
-      element.classList.remove(className);
-    }
-  }, [darkMode]);
-
   useEffect(() => {
     if (auth.user) {
       setLogin(true);
-      setDarkMode(auth.user.darkMode);
     } else {
       setLogin(false);
-      setDarkMode(false);
     }
     setLoginDialog(false);
     setRegDialog(false);
-  }, [isLoggedIn, auth.user]);
+  }, [auth.user]);
 
   const handleLogOpen = () => {
     setLoginDialog(true);
@@ -80,14 +66,6 @@ function Main({ variant }) {
   const handleLogout = () => {
     auth.logoutSession();
     setLogin(false);
-    setDarkMode(false);
-  };
-
-  const handleDarkMode = (darkMode) => {
-    auth.updateUser(auth.user.uid, {
-      darkMode,
-    });
-    setDarkMode(darkMode);
   };
 
   return (
@@ -96,11 +74,9 @@ function Main({ variant }) {
         <HeaderComponent
           onMenuClick={toggleDrawer}
           isLoggedIn={isLoggedIn}
-          darkMode={darkMode}
           handleRegOpen={handleRegOpen}
           handleLogOpen={handleLogOpen}
           handleCloseSession={handleLogout}
-          changeColorMode={handleDarkMode}
         />
         <SideBar
           open={drawer}
@@ -120,14 +96,12 @@ function Main({ variant }) {
         />
         <div className="spacing-component">
           <Switch>
-            <PrivateRoute authed={isLoggedIn} path="/profile" component={ProfilePage} />
-            <PrivateRoute authed={isLoggedIn} path="/home" component={HomePage} />
             <PrivateRoute
               authed={isLoggedIn}
               path="/favorites"
               component={FavoritesPage}
             />
-            <Route path="/" component={LandingPage} />
+            <Route path="/" component={HomePage} />
           </Switch>
         </div>
       </BrowserRouter>

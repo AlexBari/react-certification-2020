@@ -41,10 +41,12 @@ const SearchBar = ({ classes, handleFormSubmit, title = '' }) => {
     const { value } = event.target;
     setTerm(value);
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     handleFormSubmit(term);
   };
+
   return (
     <div className={classes.search}>
       <form onSubmit={handleSubmit}>

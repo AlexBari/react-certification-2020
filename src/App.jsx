@@ -1,7 +1,6 @@
 import React from 'react';
 import Main from './components/Main';
-import { ProvideAuth } from './providers/ProvideAuth';
-import './App.scss';
+import { ProvideAuth } from './providers/AuthProvider';
 
 function App() {
   return (

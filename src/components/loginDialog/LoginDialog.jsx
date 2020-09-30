@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, Button, DialogContent, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { useAuth } from '../../providers/ProvideAuth';
+import { useAuth } from '../../providers/AuthProvider';
 
 const LoginDialog = (props) => {
   const [password, setPassword] = useState(null);

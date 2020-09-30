@@ -1,8 +1,22 @@
 import React from 'react';
 import { Typography, Grid } from '@material-ui/core';
+import { useAuth } from '../../../providers/AuthProvider';
 import '../video.scss';
+import { useVideoContext } from '../../../providers/VideoPageProvider';
 
-const VideoItem = ({ video, handleVideoSelect }) => {
+const VideoItem = ({ video }) => {
+  const auth = useAuth();
+  const { state, saveHomeState } = useVideoContext();
+  let favList = auth.user ? auth.user.favoriteList: state.favoriteList;
+
+  const handleVideoSelect = (video) => {
+    const flag = favList.filter((vd) => vd.id.videoId === video.id.videoId).length > 0;
+    saveHomeState({
+      isFavorite: flag,
+      selectedVideo: video,
+    });
+  }
+
   return (
     <Grid
       container
