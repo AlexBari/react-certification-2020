@@ -47,6 +47,7 @@ const LoginDialog = ({ isOpened, handleClose }) => {
   return (
     <div>
       <Dialog
+        id="dialogLog"
         open={isOpened}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"

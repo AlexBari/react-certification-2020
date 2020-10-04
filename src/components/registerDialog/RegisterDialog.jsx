@@ -62,6 +62,7 @@ const RegisterDialog = (props) => {
   return (
     <div>
       <Dialog
+        id='dialogReg'
         open={props.isOpened}
         onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
@@ -74,7 +75,7 @@ const RegisterDialog = (props) => {
               <span>{msgError}</span>
             </Alert>
           )}
-          <form onSubmit={createUserWithEmailAndPasswordHandler}>
+          <form id="regForm" onSubmit={createUserWithEmailAndPasswordHandler}>
             <TextField
               autoFocus
               margin="dense"
