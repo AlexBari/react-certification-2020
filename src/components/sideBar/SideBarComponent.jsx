@@ -46,23 +46,23 @@ const SideBar = ({ variant, open, onClose, onItemClick }) => {
       />
       <List style={{ paddingTop: '0' }}>
         <ListItem
-          id="sideBar-item"
+          id="itemHome"
           button
           component={Link}
-          to="/home"
+          to="/"
           onClick={onItemClick('Home')}
         >
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText> Home</ListItemText>
+          <ListItemText>Home</ListItemText>
         </ListItem>
         <ListItem
-          id="sideBar-item"
+          id="itemFavorite"
           button
           component={Link}
           to="/favorites"
-          onClick={onItemClick('Home')}
+          onClick={onItemClick('favorites')}
         >
           <ListItemIcon>
             <FavoriteBorderIcon />

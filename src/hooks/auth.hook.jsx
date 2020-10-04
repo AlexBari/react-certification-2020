@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -75,7 +75,7 @@ export function useProvideAuth() {
     return getUserDocument(obj.user.uid);
   };
 
-  const getUserDocument = async (uid) => {
+  const getUserDocument = useCallback( async (uid) => {
     if (!uid) return null;
     try {
       const userDocument = await firestore.doc(`users/${uid}`).get();
@@ -86,7 +86,7 @@ export function useProvideAuth() {
     } catch (error) {
       console.error('Error fetching user', error);
     }
-  };
+  },[]);
 
   const updateUser = async (uid, additionalData) => {
     const upData = {
@@ -118,7 +118,7 @@ export function useProvideAuth() {
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, []);
+  }, [getUserDocument]);
 
   // Return the user object and auth methods
   return {

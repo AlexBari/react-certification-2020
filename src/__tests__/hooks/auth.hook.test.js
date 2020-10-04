@@ -38,8 +38,21 @@ describe('Auth Hook Test suit', () => {
             favoriteList: [],
             photoURL: ''
         })),
-        logoutSession: jest.fn(() => Promise.resolve({
-        }))
+        updateUser: jest.fn(() => Promise.resolve({
+            displayName: 'Im the second test user',
+            email: 'test2@mail.com',
+            darkMode: false,
+            favoriteList: [],
+            photoURL: ''
+        })),
+        signUpWithGoogle: jest.fn(() => Promise.resolve({
+            displayName: 'Im a user from google',
+            email: 'test@gmail.com',
+            darkMode: false,
+            favoriteList: [],
+            photoURL: '',
+        })),
+        logoutSession: jest.fn(() => Promise.resolve(null))
     });
 
     it('Sign in with email and password - Correct', async () => {
@@ -49,8 +62,8 @@ describe('Auth Hook Test suit', () => {
         expect(typeof user.email).toBe('string');
         expect(typeof user.favoriteList).toBe('object');
         expect(typeof user.darkMode).toBe('boolean');
-        expect.assertions(5);
-
+        expect(useProvideAuth().loginSession).toBeCalledTimes(1);
+        expect.assertions(6);
     });
 
     it('Sign in with email and password - Incorrect', async () => {
@@ -74,6 +87,7 @@ describe('Auth Hook Test suit', () => {
         expect(user.email).toBe('test2@mail.com');
         expect(typeof user.favoriteList).toBe('object');
         expect(user.darkMode).toBe(false);
+        expect(useProvideAuth().registerUser).toBeCalledTimes(1);
     });
 
     it('Sign up with email and password - Incorrect', async () => {
@@ -88,5 +102,27 @@ describe('Auth Hook Test suit', () => {
         } catch (error) {
             expect(error.code).toBe('Problem with registration');
         }
+    });
+
+    it('Update user', async () => {
+        const user = await useProvideAuth()
+            .updateUser('oihsfaosdih1920', {
+                displayName: 'Im the second test user'
+            });
+        expect(user.displayName).toBe('Im the second test user');
+        expect(user.email).toBe('test2@mail.com');
+        expect(useProvideAuth().updateUser).toBeCalledTimes(1);
+    });
+
+    it('Test the login through Google api', async () => {
+        const user = await useProvideAuth().signUpWithGoogle();
+        expect(user).not.toBeNull();
+        expect(user.email).toContain('@gmail.com');
+        expect(useProvideAuth().signUpWithGoogle).toBeCalledTimes(1);
+    });
+
+    it('Testing logout session', async () => {
+        const user = await useProvideAuth().logoutSession();
+        expect(user).toBeNull();
     });
 });

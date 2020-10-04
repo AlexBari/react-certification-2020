@@ -62,12 +62,13 @@ const VideoDetail = () => {
         />
       </Grid>
       <Grid item className="description">
-        <Typography varian="h6">{state.selectedVideo.snippet.title}</Typography>
+        <Typography variant="h6">{state.selectedVideo.snippet.title}</Typography>
         {auth.user && (
           <FormGroup>
             <FormControlLabel
               control={
                 <IconButton
+                  id="favoriteButton"
                   tooltip="Hide"
                   style={{ float: 'right', color: state.isFavorite ? 'red' : 'inherit' }}
                   iconstyle={{ marginTop: -25 }}

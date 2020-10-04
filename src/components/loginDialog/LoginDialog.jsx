@@ -17,7 +17,7 @@ const DivWrapper = styled.div`
   .greenG { color: #0F9D58; margin-right: 3px;}
 `;
 
-const LoginDialog = (props) => {
+const LoginDialog = ({ isOpened, handleClose }) => {
   const [password, setPassword] = useState(null);
   const [email, setEmail] = useState(null);
   const [hasError, setError] = useState(false);
@@ -37,7 +37,7 @@ const LoginDialog = (props) => {
     event.preventDefault();
     auth.loginSession(email, password)
       .then(() => {
-        props.handleClose();
+        handleClose();
       })
       .catch((error) => {
         setError(true);
@@ -47,8 +47,8 @@ const LoginDialog = (props) => {
   return (
     <div>
       <Dialog
-        open={props.isOpened}
-        onClose={props.handleClose}
+        open={isOpened}
+        onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
@@ -59,7 +59,7 @@ const LoginDialog = (props) => {
               <span>Please verify your credentials!</span>
             </Alert>
           )}
-          <form onSubmit={(e) => signInWithEmailAndPasswordHandler(e)}>
+          <form id="loginForm" onSubmit={(e) => signInWithEmailAndPasswordHandler(e)}>
             <TextField
               autoFocus
               margin="dense"
@@ -67,6 +67,7 @@ const LoginDialog = (props) => {
               label="Email"
               type="text"
               fullWidth
+              value={email}
               onChange={handleUser}
             />
             <TextField
@@ -75,13 +76,14 @@ const LoginDialog = (props) => {
               label="Password"
               type="password"
               fullWidth
+              value={password}
               onChange={handlePassword}
             />
             <DivWrapper>
               <Button id="sbtLogin" type="submit" color="primary">
                 Login
               </Button>
-              <Button id="cnlLogin" type="Abort" color="primary" onClick={props.handleClose}>
+              <Button id="cnlLogin" type="Abort" color="primary" onClick={handleClose}>
                 Cancel
               </Button>
             </DivWrapper>

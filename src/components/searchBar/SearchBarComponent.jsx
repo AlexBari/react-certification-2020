@@ -41,14 +41,9 @@ const SearchBar = ({ classes, handleFormSubmit, title = '' }) => {
     setTerm(value);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    handleFormSubmit(term);
-  };
-
   return (
     <DivWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => {e.preventDefault(); handleFormSubmit(term)}}>
         <div className="searchIcon">
           <SearchIcon />
         </div>

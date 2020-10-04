@@ -19,6 +19,7 @@ const VideoItem = ({ video }) => {
 
   return (
     <Grid
+      id="videoItem"
       container
       wrap="nowrap"
       onClick={() => handleVideoSelect(video)}

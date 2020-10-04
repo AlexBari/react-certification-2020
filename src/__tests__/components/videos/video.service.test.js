@@ -1,7 +1,7 @@
 // video.provider.test.js
 import mockAxios from 'axios';
-import { getVideos } from '../../providers/video.provider';
-import results from '../../__mocks__/searchResult';
+import { getVideos } from '../../../components/video/video.service';
+import results from '../../../__mocks__/searchResult';
 
 jest.mock('axios');
 

@@ -37,7 +37,7 @@ const HomeComponent = () => {
     };
 
     const handleFormSubmit = useCallback(async (term) => {
-        if (state.term === term) {
+        if (state.searchPerformed !== term) {
             const response = await getVideos(term);
             saveHomeState({
                 searchPerformed: term,
@@ -45,7 +45,7 @@ const HomeComponent = () => {
                 videos: response.data.items
             });
         }
-    }, [saveHomeState, state.term]);
+    }, [saveHomeState, state.searchPerformed]);
 
     return (
         <MainWrapper>

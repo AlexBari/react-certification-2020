@@ -4,7 +4,8 @@ import HeaderComponent from './header/HeaderComponent';
 import SideBar from './sideBar/SideBarComponent';
 import LoginDialog from './loginDialog/LoginDialog';
 import RegisterDialog from './registerDialog/RegisterDialog';
-import { HomePage, FavoritesPage } from '../pages/index';
+import FavoritesPage from '../pages/FavoritesPage';
+import HomePage from '../pages/HomePage';
 import PrivateRoute from './PrivateRouter';
 import { useAuth } from '../providers/AuthProvider';
 import { useUI } from '../hooks/ui.hook';
@@ -50,7 +51,7 @@ function Main({ variant }) {
   const [isLoggedIn, setLogin] = useState(false);
 
   const toggleDrawer = () => {
-    if (isLoggedIn) setDrawer(!drawer);
+   setDrawer(!drawer);
   };
 
   const onItemClick = () => () => {

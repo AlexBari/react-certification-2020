@@ -28,7 +28,7 @@ const DivWrapper = styled.div`
 
 const HeaderComponent = (props) => {
   const { isLoggedIn, handleCloseSession } = props;
-  
+
   return (
     <DivWrapper>
       <AppBar id="barColor" position="static">
@@ -67,7 +67,7 @@ const HeaderComponent = (props) => {
                 <div>
                   <Button id="loginBtn" color="inherit" onClick={props.handleLogOpen}>
                     Login
-                </Button>
+                  </Button>
                   <Button id="registerBtn" color="inherit" onClick={props.handleRegOpen}>
                     Register
                 </Button>
